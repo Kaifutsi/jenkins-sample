@@ -27,7 +27,6 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 script {
-                    // Собираем Docker образ
                     sh 'docker build -t myapp:latest .'
                 }
             }
@@ -36,12 +35,12 @@ pipeline {
         stage('Run Docker Container') {
             steps {
                 script {
-                    // Останавливаем и удаляем предыдущую версию контейнера, если он запущен
+                    // Останавливаем и удаляем предыдущий контейнер, если он существует
                     sh 'docker stop myapp || true'
                     sh 'docker rm myapp || true'
 
-                    // Запускаем новый контейнер с приложением
-                    sh 'docker run -d --name myapp -p 8080:8080 myapp:latest'
+                    // Запускаем новый контейнер
+                    sh 'docker run -d --name myapp -p 8081:8080 myapp:latest'
                 }
             }
         }
